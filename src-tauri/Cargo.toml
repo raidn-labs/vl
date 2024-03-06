@@ -1,6 +1,6 @@
 [package]
 name = "vl"
-version = "0.0.1"
+version = "0.0.2"
 description = "A VL Turbo App"
 authors = ["RAIDN"]
 license = ""
