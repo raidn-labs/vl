@@ -7,12 +7,10 @@ import Greet from "./components/Greet.vue";
 <template>
   <div class="container">
     <div class="row">
-      <button class="btn">1</button>
-      <button class="btn">2</button>
-      <button class="btn">3</button>
-      <button class="btn">4</button>
+      <button class="btn" style="width: 300px; height: 300px; margin-right: 100px">1</button>
+      <button class="btn" style="width: 300px; height: 300px">2</button>
     </div>
-    <Greet />
+<!--    <Greet />-->
   </div>
 </template>
 
