@@ -1,8 +1,8 @@
 [package]
 name = "vl"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+version = "0.0.1"
+description = "A VL Turbo App"
+authors = ["RAIDN"]
 license = ""
 repository = ""
 edition = "2021"
