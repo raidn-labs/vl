@@ -19,9 +19,8 @@ fn turn_on() {
 
         let mut pin = Gpio::new().expect("Failed to access GPIO").get(LED_PIN).expect("Failed to access pin").into_output();
 
-        println!("Turning pin {} to high.", LED_PIN);
         pin.set_high();
-        std::thread::sleep(std::time::Duration::from_secs(2));
+        std::thread::sleep(std::time::Duration::from_secs(5));
     }
 
     #[cfg(not(feature = "hardware-support"))]
