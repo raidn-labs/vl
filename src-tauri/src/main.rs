@@ -18,15 +18,7 @@ fn turn_on() {
         const LED_PIN: u8 = 17; // Use GPIO 17 as an example; adjust as necessary for your setup.
 
         let mut pin = Gpio::new().expect("Failed to access GPIO").get(LED_PIN).expect("Failed to access pin").into_output();
-
-        println!("Flashing the LED on pin {}.", LED_PIN);
-        for _ in 0..5 {
-            pin.set_high();
-            std::thread::sleep(std::time::Duration::from_secs(1));
-            pin.set_low();
-            std::thread::sleep(std::time::Duration::from_secs(1));
-        }
-        println!("Done flashing the LED.");
+        pin.set_high();
     }
 
     #[cfg(not(feature = "hardware-support"))]
