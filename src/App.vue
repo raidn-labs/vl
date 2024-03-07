@@ -23,7 +23,7 @@ async function turnOff() {
       <button class="btn" style="width: 300px; height: 300px; margin-right: 100px" @click="turnOn">On</button>
       <button class="btn" style="width: 300px; height: 300px" @click="turnOff">Off</button>
     </div>
-    <Greet />
+<!--    <Greet />-->
   </div>
 </template>
 

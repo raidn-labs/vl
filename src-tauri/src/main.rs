@@ -38,7 +38,19 @@ fn turn_on() {
 
 #[tauri::command]
 fn turn_off() {
-    // turn off
+    #[cfg(feature = "hardware-support")]
+    {
+        const LED_PIN: u8 = 17; // Use GPIO 17 as an example; adjust as necessary for your setup.
+        let mut pin = Gpio::new().expect("Failed to access GPIO").get(LED_PIN).expect("Failed to access pin").into_output();
+        pin.set_low();
+        println!("LED turned off.");
+    }
+
+    #[cfg(not(feature = "hardware-support"))]
+    {
+        println!("Hardware support is not enabled. Running in stub mode.");
+        // Implement any stub behavior you need here.
+    }
 }
 
 fn main() {
