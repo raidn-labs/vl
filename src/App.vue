@@ -4,7 +4,7 @@
 import Greet from "./components/Greet.vue";
 import {invoke} from "@tauri-apps/api/tauri";
 
-function turnOn() {
+async function turnOn() {
   console.log('turning on');
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   invoke("turn_on");
