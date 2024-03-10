@@ -25,13 +25,17 @@ fn get_temperature() -> Result<f32, String> {
         let temp_raw: i32 = temp_str.parse().unwrap();
 
         // Convert raw temperature to Celsius
-        Ok(temp_raw as f32 / 1000.0)
+        // To round a floating-point number to one decimal place in Rust, you can use the round method after
+        // multiplying the number by 10, then divide by 10 again. This process shifts the decimal point to
+        // the right, rounds the number, and then shifts it back, effectively rounding to the desired
+        // number of decimal places.
+        Ok(((temp_raw as f32 / 1000.0) * 10.0).round() / 10.0)
     }
 
     #[cfg(not(feature = "hardware-support"))]
     {
         println!("Hardware support is not enabled. Temp running in stub mode.");
-        Ok(69.69)
+        Ok(69.6)
     }
 }
 
