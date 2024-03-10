@@ -1,8 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
 
 const temperature = ref(null);
+
+onMounted(() => {
+  const intervalId = setInterval(getTemperature, 60000); // 60000 milliseconds = 1 minute
+
+  onUnmounted(() => {
+    clearInterval(intervalId); // Clear the interval when the component is unmounted
+  });
+})
 
 async function getTemperature() {
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -12,7 +20,7 @@ async function getTemperature() {
 
 <template>
   <div class="row" style="margin-top: 20px">
-    <button class="btn" @click="getTemperature" style="width:150px; margin-right: 20px">Get Temp</button>
-    <h1>{{ Math.round(temperature * 10) / 10 }}</h1>
+    <h1>Car temp: {{ Math.round(temperature * 10) / 10 }}</h1>
+    <button class="btn" @click="getTemperature" style="width:100px; margin-left: 20px">Refresh</button>
   </div>
 </template>
