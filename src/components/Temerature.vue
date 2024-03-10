@@ -5,7 +5,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 const temperature = ref(null);
 
 onMounted(() => {
-  const intervalId = setInterval(getTemperature, 60000); // 60000 milliseconds = 1 minute
+  const intervalId = setInterval(getTemperature(), 60000); // 60000 milliseconds = 1 minute
 
   onUnmounted(() => {
     clearInterval(intervalId); // Clear the interval when the component is unmounted
