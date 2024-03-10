@@ -1,29 +1,23 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Greet from "./components/Greet.vue";
+import Temperature from "./components/Temerature.vue";
 import {invoke} from "@tauri-apps/api/tauri";
 
-async function turnOn() {
-  console.log('turning on');
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  invoke("turn_on");
-}
-
-async function turnOff() {
-  console.log('turning off');
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  await invoke("turn_off");
+async function setFanSpeed(speed) {
+  await invoke("set_fan_speed", { speed });
 }
 </script>
 
 <template>
   <div class="container">
     <div class="row">
-      <button class="btn" style="width: 300px; height: 300px; margin-right: 100px" @click="turnOn">On</button>
-      <button class="btn" style="width: 300px; height: 300px" @click="turnOff">Off</button>
+      <button class="btn" style="width: 150px; height: 150px; margin-right: 100px" @click="setFanSpeed(0)">Off</button>
+      <button class="btn" style="width: 150px; height: 150px; margin-right: 100px" @click="setFanSpeed(1)">Low</button>
+      <button class="btn" style="width: 150px; height: 150px; margin-right: 100px" @click="setFanSpeed(2)">Med</button>
+      <button class="btn" style="width: 150px; height: 150px; margin-right: 100px" @click="setFanSpeed(3)">High</button>
     </div>
-<!--    <Greet />-->
+    <Temperature />
   </div>
 </template>
 
