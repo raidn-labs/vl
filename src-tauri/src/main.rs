@@ -5,6 +5,7 @@
 #[cfg(feature = "hardware-support")]
 use rppal::gpio::Gpio;
 
+use std::io::{self, Read}; // Import the Read trait
 use std::fs::File;
 
 
