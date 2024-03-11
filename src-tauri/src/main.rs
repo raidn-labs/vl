@@ -7,8 +7,6 @@ use rppal::gpio::Gpio;
 
 use std::io::{self, Read}; // Import the Read trait
 use std::fs::File;
-
-
 #[tauri::command]
 fn get_temperature() -> Result<f32, String> {
     #[cfg(feature = "hardware-support")]
@@ -18,7 +16,7 @@ fn get_temperature() -> Result<f32, String> {
         let mut file = File::open(path).map_err(|e| e.to_string())?; // Convert the error to a String;
 
         let mut contents = String::new();
-        file.read_to_string(&mut contents).map_err(|e| e.to_string())?;;
+        file.read_to_string(&mut contents).map_err(|e| e.to_string())?;
 
         // The temperature data is usually at the end of the second line, after 't='
         let temp_str = contents.split_whitespace().last().unwrap().split("=").nth(1).unwrap();
