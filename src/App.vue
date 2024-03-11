@@ -43,7 +43,7 @@ async function getTemperature() {
   <div class="flex flex-col h-screen bg-gray-800">
     <!-- Utility Bar -->
     <div class="w-full py-2 px-4 bg-black bg-opacity-50 fixed top-0 z-10">
-      <div class="flex justify-end items-center text-white text-lg">
+      <div class="flex justify-end items-center text-white text-md">
         <span class="mr-4">{{ Math.round(temperature * 10) / 10 }}°C</span>
         <!-- Time Display -->
         <span>{{ time }}</span>
@@ -60,9 +60,9 @@ async function getTemperature() {
     <div class="w-full py-3 bg-gray-900 fixed bottom-0 z-10">
       <div class="flex justify-center items-center space-x-4">
         <!-- Navigation Menu -->
-        <a href="#" class="text-white px-3 py-2 rounded-md text-xl font-medium">Home</a>
-        <a href="#" class="text-white px-3 py-2 rounded-md text-xl font-medium">Music</a>
-        <a href="#" class="text-white px-3 py-2 rounded-md text-xl font-medium">Settings</a>
+        <a href="#" class="text-white px-3 py-2 rounded-md text-lg font-medium">Home</a>
+        <a href="#" class="text-white px-3 py-2 rounded-md text-lg font-medium">Music</a>
+        <a href="#" class="text-white px-3 py-2 rounded-md text-lg font-medium">Settings</a>
       </div>
     </div>
   </div>
