@@ -21,8 +21,8 @@ async function getTemperature() {
 </script>
 
 <template>
-  <div class="row" style="margin-top: 20px">
+  <div class="row mt-10">
     <h1>Car temp: {{ Math.round(temperature * 10) / 10 }}</h1>
-    <button class="btn" @click="getTemperature" style="width:100px; margin-left: 20px">Refresh</button>
+    <button class="btn w-24 ml-8" @click="getTemperature">Refresh</button>
   </div>
 </template>
