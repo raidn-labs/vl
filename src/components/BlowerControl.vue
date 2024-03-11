@@ -7,7 +7,7 @@ async function setFanSpeed(speed) {
 </script>
 
 <template>
-  <div class="flex mx-16 my-16">
+  <div class="flex">
       <button type="button" class="mr-4 rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20" @click="setFanSpeed(0)">Off</button>
       <button type="button" class="mr-4 rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20" @click="setFanSpeed(1)">Low</button>
       <button type="button" class="mr-4 rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20" @click="setFanSpeed(2)">Med</button>
