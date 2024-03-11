@@ -2,10 +2,12 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
 
-const temperature = ref(null);
+const temperature = ref(0);
 
 onMounted(() => {
-  const intervalId = setInterval(getTemperature(), 60000); // 60000 milliseconds = 1 minute
+  getTemperature();
+
+  const intervalId = setInterval(getTemperature, 60000); // 60000 milliseconds = 1 minute
 
   onUnmounted(() => {
     clearInterval(intervalId); // Clear the interval when the component is unmounted
