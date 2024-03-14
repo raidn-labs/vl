@@ -39,7 +39,6 @@ fn get_temperature() -> Result<f32, String> {
 fn set_fan_speed(speed: u8) {
     #[cfg(feature = "hardware-support")]
     {
-        println!("Attempting to send message to Arduino.");
         let mut uart = match Uart::with_path("/dev/ttyACM0", 9600, Parity::None, 8, 1) {
             Ok(uart) => uart,
             Err(e) => {
@@ -49,6 +48,7 @@ fn set_fan_speed(speed: u8) {
         };
 
         let message = format!("FAN_SPEED_{}\n", speed);
+        println!("{}", message);
         if let Err(e) = uart.write(message.as_bytes()) {
             println!("Error sending message to Arduino: {:?}", e);
         }
