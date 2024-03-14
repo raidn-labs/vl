@@ -6,9 +6,8 @@ import {ref} from 'vue';
 
 const activeScreen = ref('home');
 
-function isActiveScreen (screen) {
-  return activeScreen.value === screen;
-}
+const isActiveScreen = (screen) => activeScreen.value === screen;
+
 </script>
 
 <template>

@@ -4,6 +4,8 @@
 // Conditionally compile `rppal` dependency only when `hardware-support` feature is enabled
 #[cfg(feature = "hardware-support")]
 use rppal::gpio::Gpio;
+#[cfg(feature = "hardware-support")]
+use rppal::uart::{Uart, Parity};
 
 use std::io::{self, Read}; // Import the Read trait
 use std::fs::File;
@@ -37,17 +39,19 @@ fn get_temperature() -> Result<f32, String> {
 fn set_fan_speed(speed: u8) {
     #[cfg(feature = "hardware-support")]
     {
-        const LED_PIN: u8 = 17; // Use GPIO 17 as an example; adjust as necessary for your setup.
+        println!("Attempting to send message to Arduino.");
+        // Assuming your Arduino is connected via USB and appears as /dev/ttyUSB0
+        // The device path might be different (/dev/ttyACM0, /dev/ttyAMA0, etc.) based on your setup
+        let mut uart = Uart::with_path("/dev/ttyACM0", 9600, Parity::None, 8, 1)?;
 
-        let mut pin = Gpio::new().expect("Failed to access GPIO").get(LED_PIN).expect("Failed to access pin").into_output();
-
-        pin.set_high();
-        std::thread::sleep(std::time::Duration::from_secs(5));
+        let message = format!("FAN_SPEED_{}", speed);
+        uart.write(message.as_bytes())?;
     }
 
     #[cfg(not(feature = "hardware-support"))]
     {
-        println!("Hardware support is not enabled. Running in stub mode.");
+        let message = format!("Hardware support is not enabled. Speed: {}", speed);
+        println!("{}", message);
         // Implement any stub behavior you need here.
     }
 }
