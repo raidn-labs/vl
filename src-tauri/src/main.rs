@@ -40,12 +40,18 @@ fn set_fan_speed(speed: u8) {
     #[cfg(feature = "hardware-support")]
     {
         println!("Attempting to send message to Arduino.");
-        // Assuming your Arduino is connected via USB and appears as /dev/ttyUSB0
-        // The device path might be different (/dev/ttyACM0, /dev/ttyAMA0, etc.) based on your setup
-        let mut uart = Uart::with_path("/dev/ttyACM0", 9600, Parity::None, 8, 1)?;
+        let mut uart = match Uart::with_path("/dev/ttyACM0", 9600, Parity::None, 8, 1) {
+            Ok(uart) => uart,
+            Err(e) => {
+                println!("Failed to open UART connection: {:?}", e);
+                return; // Exit the function early if an error occurs
+            },
+        };
 
         let message = format!("FAN_SPEED_{}", speed);
-        uart.write(message.as_bytes())?;
+        if let Err(e) = uart.write(message.as_bytes()) {
+            println!("Error sending message to Arduino: {:?}", e);
+        }
     }
 
     #[cfg(not(feature = "hardware-support"))]
