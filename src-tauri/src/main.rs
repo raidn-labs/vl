@@ -48,7 +48,7 @@ fn set_fan_speed(speed: u8) {
             },
         };
 
-        let message = format!("FAN_SPEED_{}", speed);
+        let message = format!("FAN_SPEED_{}\n", speed);
         if let Err(e) = uart.write(message.as_bytes()) {
             println!("Error sending message to Arduino: {:?}", e);
         }
