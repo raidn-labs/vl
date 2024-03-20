@@ -7,6 +7,8 @@ use rppal::gpio::Gpio;
 #[cfg(feature = "hardware-support")]
 use rppal::uart::{Uart, Parity};
 
+use serialport::{self, SerialPortType};
+
 use std::io::{self, Read}; // Import the Read trait
 use std::fs::File;
 #[tauri::command]
@@ -39,35 +41,28 @@ fn get_temperature() -> Result<f32, String> {
 fn set_fan_speed(speed: u8) {
     #[cfg(feature = "hardware-support")]
     {
-        let mut uart = match Uart::with_path("/dev/ttyACM0", 9600, Parity::None, 8, 1) {
-            Ok(uart) => uart,
-            Err(e) => {
-                println!("Failed to open UART connection: {:?}", e);
-                return; // Exit the function early if an error occurs
-            },
-        };
+        let port_name = "/dev/ttyACM0"; // Adjust this to match your Arduino's serial port
+        let baud_rate = 9600;
 
+        let mut port = serialport::new(port_name, baud_rate)
+            .timeout(Duration::from_millis(1000))
+            .open()
+            .expect("Failed to open port");
+
+        println!("Successfully opened port {}", port_name);
         let status = if speed == 0 { "OFF" } else { "ON" };
+        let message = format!("LED_{}\n", status); // Change this to send different commands
+        println!("Sending: {}", message);
+        port.write(message.as_bytes()).expect("Failed to write to serial port");
 
-        let message = format!("LED_{}\n", status);
-        println!("{}", message);
-        if let Err(e) = uart.write(message.as_bytes()) {
-            println!("Error sending message to Arduino: {:?}", e);
-        }
-
-
-        // Give the Arduino time to process the command and respond
-        std::thread::sleep(std::time::Duration::from_millis(500));
-
-        let mut buf = vec![0; 1024]; // Adjust the buffer size as needed
-        match uart.read(&mut buf) {
-            Ok(bytes_read) => {
-                let response = String::from_utf8_lossy(&buf[..bytes_read]);
+        // Read response
+        let mut serial_buf: Vec<u8> = vec![0; 32]; // A small buffer is enough
+        match port.read(serial_buf.as_mut_slice()) {
+            Ok(bytes) => {
+                let response = String::from_utf8_lossy(&serial_buf[..bytes]);
                 println!("Received: {}", response);
             },
-            Err(e) => {
-                println!("Error reading response from Arduino: {:?}", e);
-            },
+            Err(e) => println!("Error reading: {:?}", e),
         }
     }
 
