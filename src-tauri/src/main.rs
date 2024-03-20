@@ -54,6 +54,21 @@ fn set_fan_speed(speed: u8) {
         if let Err(e) = uart.write(message.as_bytes()) {
             println!("Error sending message to Arduino: {:?}", e);
         }
+
+
+        // Give the Arduino time to process the command and respond
+        std::thread::sleep(std::time::Duration::from_millis(500));
+
+        let mut buf = vec![0; 1024]; // Adjust the buffer size as needed
+        match uart.read(&mut buf) {
+            Ok(bytes_read) => {
+                let response = String::from_utf8_lossy(&buf[..bytes_read]);
+                println!("Received: {}", response);
+            },
+            Err(e) => {
+                println!("Error reading response from Arduino: {:?}", e);
+            },
+        }
     }
 
     #[cfg(not(feature = "hardware-support"))]
